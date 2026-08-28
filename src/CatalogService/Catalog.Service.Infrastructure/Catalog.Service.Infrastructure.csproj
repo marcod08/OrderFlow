@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Catalog.Service.Application/Catalog.Service.Application.csproj" />
+    <ProjectReference Include="../Catalog.Service.Domain/Catalog.Service.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
