@@ -3,6 +3,9 @@ using Catalog.Service.Infrastructure.Persistence;
 using Catalog.Service.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
+using FluentValidation;
+using Catalog.Service.Application.Products.CreateProduct;
+using Catalog.Service.Application.Behaviors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,10 @@ builder.Services.AddDbContext<CatalogDbContext>(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssemblyContaining<Catalog.Service.Application.Products.CreateProduct.CreateProductCommand>());
+    cfg.RegisterServicesFromAssemblyContaining<CreateProductCommand>());
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateProductValidator>();
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 var app = builder.Build();
 
