@@ -1,4 +1,5 @@
 using Catalog.Service.Application.Products.CreateProduct;
+using Catalog.Service.Application.Products.GetProductById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,5 +20,13 @@ public class ProductController : ControllerBase
     {
         var result = await _mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(CreateProduct), new { id = result}, result);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetProductById(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetProductByIdQuery(id), cancellationToken);
+        if (result is null) return NotFound();
+        return Ok(result);
     }
 }
