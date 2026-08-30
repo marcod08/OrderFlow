@@ -6,6 +6,7 @@ using MediatR;
 using FluentValidation;
 using Catalog.Service.Application.Products.CreateProduct;
 using Catalog.Service.Application.Behaviors;
+using Catalog.Service.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateProductValidator>();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
