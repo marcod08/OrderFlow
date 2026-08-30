@@ -7,8 +7,15 @@ using FluentValidation;
 using Catalog.Service.Application.Products.CreateProduct;
 using Catalog.Service.Application.Behaviors;
 using Catalog.Service.Api.Middleware;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -22,7 +29,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<CreateProductCommand>());
 
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductValidator>();
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 var app = builder.Build();
