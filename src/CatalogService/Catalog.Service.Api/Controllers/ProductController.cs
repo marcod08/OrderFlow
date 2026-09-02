@@ -1,5 +1,6 @@
 using Catalog.Service.Application.DTOs;
 using Catalog.Service.Application.Products.CreateProduct;
+using Catalog.Service.Application.Products.DeleteProduct;
 using Catalog.Service.Application.Products.GetAllProducts;
 using Catalog.Service.Application.Products.GetProductById;
 using Catalog.Service.Application.Products.UpdateProductStock;
@@ -54,5 +55,13 @@ public class ProductController : ControllerBase
         var command = new ReleaseProductStockCommand(id, request.Quantity);
         var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
+    {
+        var command = new DeleteProductCommand(id);
+        await _mediator.Send(command, cancellationToken);
+        return NoContent();
     }
 }
