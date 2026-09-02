@@ -21,6 +21,24 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
             var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
             await context.Response.WriteAsync(JsonSerializer.Serialize(new { errors }));
         }
+        catch (KeyNotFoundException ex)
+        {
+            logger.LogWarning(ex, "Resource not found.");
+
+            context.Response.StatusCode = 404;
+            context.Response.ContentType = "application/json";
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new { error = ex.Message }));
+        }
+        catch (InvalidOperationException ex)
+        {
+            logger.LogWarning(ex, "Invalid operation.");
+
+            context.Response.StatusCode = 409;
+            context.Response.ContentType = "application/json";
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new { error = ex.Message }));
+        }
         catch (Exception ex)
         {
             logger.LogError(ex, "An unhandled exception occurred.");
