@@ -4,17 +4,11 @@ using MediatR;
 
 namespace Catalog.Service.Application.Products.GetProductById;
 
-public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductResponse?>
+public class GetProductByIdHandler(IProductRepository repository) : IRequestHandler<GetProductByIdQuery, ProductResponse?>
 {
-    private readonly IProductRepository _repository;
-
-    public GetProductByIdHandler(IProductRepository repository)
-    {
-        _repository = repository;
-    }
     public async Task<ProductResponse?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var product = await repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (product is null) return null;
 
