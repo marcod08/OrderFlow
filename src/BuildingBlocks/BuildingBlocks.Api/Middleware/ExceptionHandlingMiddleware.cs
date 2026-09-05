@@ -1,7 +1,9 @@
 using System.Text.Json;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-namespace Catalog.Service.Api.Middleware;
+namespace BuildingBlocks.Api.Middleware;
 
 public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
 {

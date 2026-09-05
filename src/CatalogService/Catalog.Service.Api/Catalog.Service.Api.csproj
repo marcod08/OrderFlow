@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../BuildingBlocks/BuildingBlocks.Api/BuildingBlocks.Api.csproj" />
     <ProjectReference Include="../Catalog.Service.Application/Catalog.Service.Application.csproj" />
     <ProjectReference Include="../Catalog.Service.Infrastructure/Catalog.Service.Infrastructure.csproj" />
   </ItemGroup>

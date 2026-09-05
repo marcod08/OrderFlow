@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 using FluentValidation;
 using Catalog.Service.Application.Products.CreateProduct;
-using Catalog.Service.Application.Behaviors;
-using Catalog.Service.Api.Middleware;
+using BuildingBlocks.Application.Behaviors;
+using BuildingBlocks.Api.Middleware;
 using Serilog;
 
 
