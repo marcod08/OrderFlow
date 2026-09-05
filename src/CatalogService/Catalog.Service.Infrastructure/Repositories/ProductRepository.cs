@@ -34,8 +34,9 @@ public class ProductRepository : IProductRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(Product product, CancellationToken cancellationToken)
+    public Task DeleteAsync(Product product, CancellationToken cancellationToken)
     {
         _context.Products.Remove(product);
+        return Task.CompletedTask;
     }
 }

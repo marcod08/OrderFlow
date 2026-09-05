@@ -25,6 +25,7 @@
     <ProjectReference Include="../../BuildingBlocks/BuildingBlocks.Api/BuildingBlocks.Api.csproj" />
     <ProjectReference Include="../Catalog.Service.Application/Catalog.Service.Application.csproj" />
     <ProjectReference Include="../Catalog.Service.Infrastructure/Catalog.Service.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks.Application\BuildingBlocks.Application.csproj" />
   </ItemGroup>
 
 </Project>
