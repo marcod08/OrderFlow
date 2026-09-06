@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Service.Infrastructure.Persistence;
 
-public class CatalogDbContext : DbContext
+public class CatalogDbContext(DbContextOptions<CatalogDbContext> options) : DbContext(options)
 {
-    public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options)
-    {
-    }
-
     public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
