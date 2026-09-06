@@ -1,12 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MediatR;
+using Ordering.Service.Application.Interfaces;
+using Ordering.Service.Domain;
 
-namespace Ordering.Service.Application.Orders
+namespace Ordering.Service.Application.Orders;
+
+public class CreateOrderHandler(IOrderRepository repository) : IRequestHandler<CreateOrderCommand, Guid>
 {
-    public class CreateOrderHandler
+    public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        
+        var order = new Order(request.ProductId, request.Quantity);
+
+        await repository.AddAsync(order, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+
+        return order.Id;
     }
 }
