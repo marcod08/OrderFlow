@@ -10,4 +10,8 @@
     <ProjectReference Include="../Ordering.Service.Domain/Ordering.Service.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
 </Project>
