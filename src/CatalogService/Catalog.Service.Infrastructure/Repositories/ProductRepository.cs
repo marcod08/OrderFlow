@@ -5,38 +5,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Service.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(CatalogDbContext context) : IProductRepository
 {   
-    private readonly CatalogDbContext _context;
-
-    public ProductRepository(CatalogDbContext context)
-    {
-        _context = context;
-    }
-    
     public async Task AddAsync(Product product, CancellationToken cancellationToken)
     {
-        await _context.Products.AddAsync(product, cancellationToken);
+        await context.Products.AddAsync(product, cancellationToken);
     }
 
     public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _context.Products.ToListAsync(cancellationToken);
+        return await context.Products.ToListAsync(cancellationToken);
     }
 
     public async Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return await context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     public Task DeleteAsync(Product product, CancellationToken cancellationToken)
     {
-        _context.Products.Remove(product);
+        context.Products.Remove(product);
         return Task.CompletedTask;
     }
 }
