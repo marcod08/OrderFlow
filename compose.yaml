@@ -30,5 +30,35 @@ services:
       timeout: 5s
       retries: 5
 
+  orderingserviceapi:
+    image: orderingserviceapi
+    build:
+      context: .
+      dockerfile: src/OrderingService/Ordering.Service.Api/Dockerfile
+    ports:
+      - "6001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__OrderingDb=Host=orderingdb;Port=5432;Database=orderingdb;Username=postgres;Password=devpassword;
+    depends_on:
+      orderingdb:
+        condition: service_healthy
+
+  orderingdb:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=devpassword
+      - POSTGRES_DB=orderingdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - orderingdb-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 volumes:
   catalogdb-data:
+  orderingdb-data:
