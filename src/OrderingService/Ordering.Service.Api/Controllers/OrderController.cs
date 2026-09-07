@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Ordering.Service.Application.Orders;
+using Ordering.Service.Application.Orders.CreateOrder;
 
 namespace Ordering.Service.Api.Controllers;
 

@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Service.Application.Interfaces;
-using Ordering.Service.Application.Orders;
+using Ordering.Service.Application.Orders.CreateOrder;
 using Ordering.Service.Infrastructure.Persistence;
 using Ordering.Service.Infrastructure.Repositories;
 using Serilog;
@@ -29,7 +29,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<CreateOrderCommand>());
 
 
-// builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderValidator>();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
