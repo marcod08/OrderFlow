@@ -2,7 +2,7 @@ using MediatR;
 using Ordering.Service.Application.Interfaces;
 using Ordering.Service.Domain;
 
-namespace Ordering.Service.Application.Orders;
+namespace Ordering.Service.Application.Orders.CreateOrder;
 
 public class CreateOrderHandler(IOrderRepository repository) : IRequestHandler<CreateOrderCommand, Guid>
 {
