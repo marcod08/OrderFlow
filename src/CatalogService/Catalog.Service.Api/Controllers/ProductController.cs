@@ -11,25 +11,19 @@ namespace Catalog.Service.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductController : ControllerBase
+public class ProductController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-    public ProductController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateProduct(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(CreateProduct), new { id = result}, result);
     }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetProductById(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetProductByIdQuery(id), cancellationToken);
+        var result = await mediator.Send(new GetProductByIdQuery(id), cancellationToken);
         if (result is null) return NotFound();
         return Ok(result);
     }
@@ -37,7 +31,7 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetAllProductsQuery(), cancellationToken);
+        var result = await mediator.Send(new GetAllProductsQuery(), cancellationToken);
         return Ok(result);
     }
 
@@ -45,7 +39,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> ReserveProductStock(Guid id, [FromBody] ReserveStockRequest request, CancellationToken cancellationToken)
     {
         var command = new ReserveProductStockCommand(id, request.Quantity);
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }
 
@@ -53,7 +47,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> ReleaseProductStock(Guid id, [FromBody] ReleaseStockRequest request, CancellationToken cancellationToken)
     {
         var command = new ReleaseProductStockCommand(id, request.Quantity);
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }
 
@@ -61,7 +55,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteProductCommand(id);
-        await _mediator.Send(command, cancellationToken);
+        await mediator.Send(command, cancellationToken);
         return NoContent();
     }
 }
