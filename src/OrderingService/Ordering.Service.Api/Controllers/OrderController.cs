@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Ordering.Service.Application.Orders.CancelOrder;
 using Ordering.Service.Application.Orders.CreateOrder;
 using Ordering.Service.Application.Orders.GetOrderById;
 
@@ -22,5 +23,13 @@ public class OrderController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(new GetOrderByIdQuery(id), cancellationToken);
         if (result is null) return NotFound();
         return Ok(result);
+    }
+
+    [HttpPost("{id:guid}/cancel")]
+    public async Task<IActionResult> CancelOrder(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new CancelOrderCommand(id), cancellationToken);
+        if (!result) return NotFound();
+        return NoContent();
     }
 }
