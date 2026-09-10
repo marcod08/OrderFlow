@@ -1,16 +1,15 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
-
 services:
-  catalogserviceapi:
-    image: catalogserviceapi
+  orderingserviceapi:
+    image: orderingserviceapi
     build:
       context: .
-      dockerfile: src/CatalogService/Catalog.Service.Api/Dockerfile
+      dockerfile: src/OrderingService/Ordering.Service.Api/Dockerfile
       args:
         - configuration=Debug
     ports:
-      - 8080:8080
+      - "6001:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__OrderingDb=Host=orderingdb;Port=5432;Database=orderingdb;Username=postgres;Password=devpassword;
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
