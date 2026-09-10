@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Service.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Service.Api", "src\OrderingService\Ordering.Service.Api\Ordering.Service.Api.csproj", "{9DF19CA7-2B52-4F16-BB4D-2D55D7E54DBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Service.UnitTests", "tests\Ordering.Service.UnitTests\Ordering.Service.UnitTests.csproj", "{409B8CFF-AFCE-490C-B9DC-A81D6029F219}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,18 @@ Global
 		{9DF19CA7-2B52-4F16-BB4D-2D55D7E54DBB}.Release|x64.Build.0 = Release|Any CPU
 		{9DF19CA7-2B52-4F16-BB4D-2D55D7E54DBB}.Release|x86.ActiveCfg = Release|Any CPU
 		{9DF19CA7-2B52-4F16-BB4D-2D55D7E54DBB}.Release|x86.Build.0 = Release|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Debug|x64.Build.0 = Debug|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Debug|x86.Build.0 = Debug|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Release|Any CPU.Build.0 = Release|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Release|x64.ActiveCfg = Release|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Release|x64.Build.0 = Release|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Release|x86.ActiveCfg = Release|Any CPU
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,5 +219,6 @@ Global
 		{DBC591C4-D609-4FF4-BE84-A22D0D8BCDCF} = {628C42EE-5C1B-3E94-3469-025428B5F5D8}
 		{CBF8C517-B90B-4AAF-BA94-E167DDBC669A} = {628C42EE-5C1B-3E94-3469-025428B5F5D8}
 		{9DF19CA7-2B52-4F16-BB4D-2D55D7E54DBB} = {628C42EE-5C1B-3E94-3469-025428B5F5D8}
+		{409B8CFF-AFCE-490C-B9DC-A81D6029F219} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
