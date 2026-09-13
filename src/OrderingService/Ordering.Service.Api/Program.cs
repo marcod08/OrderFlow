@@ -1,8 +1,10 @@
 using BuildingBlocks.Api.Middleware;
 using BuildingBlocks.Application.Behaviors;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordering.Service.Application.Consumers;
 using Ordering.Service.Application.Interfaces;
 using Ordering.Service.Application.Orders.CreateOrder;
 using Ordering.Service.Infrastructure.Persistence;
@@ -34,6 +36,22 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderValidator>();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<StockReservedConsumer>();
+    x.AddConsumer<StockReservationFailedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMq:Host"] ?? "localhost", "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMq:Username"] ?? "guest");
+            h.Password(builder.Configuration["RabbitMq:Password"] ?? "guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 var app = builder.Build();
 
