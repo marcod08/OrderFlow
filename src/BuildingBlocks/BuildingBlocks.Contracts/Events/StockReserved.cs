@@ -1,3 +1,3 @@
 namespace BuildingBlocks.Contracts.Events;
 
-public record StockReserved(Guid OrderId);
+public record StockReserved(Guid OrderId, decimal UnitPrice);

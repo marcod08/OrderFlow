@@ -13,6 +13,7 @@ public class StockReservedConsumer(IOrderRepository repository) : IConsumer<Stoc
         var order = await repository.GetByIdAsync(message.OrderId, context.CancellationToken) ?? throw new KeyNotFoundException($"Order with id {message.OrderId} not found");
 
         order.MarkStockReserved();
+        order.SetTotalPrice(message.UnitPrice * order.Quantity);
 
         await repository.SaveChangesAsync(context.CancellationToken);
     }

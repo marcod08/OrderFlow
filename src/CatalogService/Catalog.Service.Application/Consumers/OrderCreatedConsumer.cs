@@ -1,4 +1,5 @@
 using BuildingBlocks.Contracts.Events;
+using Catalog.Service.Application.Products.GetProductById;
 using Catalog.Service.Application.Products.UpdateProductStock;
 using MassTransit;
 using MediatR;
@@ -14,7 +15,10 @@ public class OrderCreatedConsumer(IMediator mediator) : IConsumer<OrderCreated>
         try
         {
             await mediator.Send(new ReserveProductStockCommand(message.ProductId, message.Quantity), context.CancellationToken);
-            await context.Publish(new StockReserved(message.OrderId), context.CancellationToken);
+
+            var product = await mediator.Send(new GetProductByIdQuery(message.ProductId), context.CancellationToken);
+
+            await context.Publish(new StockReserved(message.OrderId, product!.Price), context.CancellationToken);
         }
         catch (Exception ex)
         {
