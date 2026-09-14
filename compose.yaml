@@ -10,8 +10,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CatalogDb=Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=devpassword;
+      - RabbitMQ__Host=rabbitmq
     depends_on:
       catalogdb:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
 
   catalogdb:
@@ -40,8 +43,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__OrderingDb=Host=orderingdb;Port=5432;Database=orderingdb;Username=postgres;Password=devpassword;
+      - RabbitMQ__Host=rabbitmq
     depends_on:
       orderingdb:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
 
   orderingdb:
