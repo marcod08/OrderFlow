@@ -4,19 +4,16 @@ using Ordering.Service.Application.Interfaces;
 
 namespace Ordering.Service.Application.Consumers;
 
-public class StockReservedConsumer(IOrderRepository repository) : IConsumer<StockReserved>
+public class PaymentFailedConsumer(IOrderRepository repository) : IConsumer<PaymentFailed>
 {
-    public async Task Consume(ConsumeContext<StockReserved> context)
+    public async Task Consume(ConsumeContext<PaymentFailed> context)
     {
         var message = context.Message;
 
         var order = await repository.GetByIdAsync(message.OrderId, context.CancellationToken) ?? throw new KeyNotFoundException($"Order with id {message.OrderId} not found");
 
-        order.MarkStockReserved();
-        order.SetTotalPrice(message.UnitPrice * order.Quantity);
+        order.MarkCancelled();
 
         await repository.SaveChangesAsync(context.CancellationToken);
-
-        await context.Publish(new PaymentRequested(message.OrderId, order.TotalPrice!.Value), context.CancellationToken);
     }
 }
