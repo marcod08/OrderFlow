@@ -1,6 +1,0 @@
-@Billing.Service.Api_HostAddress = http://localhost:5217
-
-GET {{Billing.Service.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

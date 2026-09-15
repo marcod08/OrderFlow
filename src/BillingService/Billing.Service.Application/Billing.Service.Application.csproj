@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="../Billing.Service.Domain/Billing.Service.Domain.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks.Contracts\BuildingBlocks.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" />
     <PackageReference Include="MediatR" />
   </ItemGroup>
 
