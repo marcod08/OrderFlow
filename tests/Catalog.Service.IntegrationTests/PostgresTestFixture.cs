@@ -25,7 +25,7 @@ public class PostgresTestFixture : IAsyncLifetime
         DbContext = new CatalogDbContext(options);
         await DbContext.Database.MigrateAsync();
     }
-        public async Task DisposeAsync()
+    public async Task DisposeAsync()
     {
         await DbContext.DisposeAsync();
         await _container.DisposeAsync();
