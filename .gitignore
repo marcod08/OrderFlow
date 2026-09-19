@@ -6,3 +6,4 @@ obj/
 !.vscode/extensions.json
 appsettings.Development.json
 .DS_Store
+*.pem

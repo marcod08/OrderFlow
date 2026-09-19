@@ -98,6 +98,22 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  identitydb:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=devpassword
+      - POSTGRES_DB=identitydb
+    ports:
+      - "5435:5432"
+    volumes:
+      - identitydb-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -130,3 +146,4 @@ volumes:
   catalogdb-data:
   orderingdb-data:
   billingdb-data:
+  identitydb-data:
