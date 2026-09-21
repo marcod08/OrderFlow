@@ -5,6 +5,7 @@ using Catalog.Service.Application.Products.GetAllProducts;
 using Catalog.Service.Application.Products.GetProductById;
 using Catalog.Service.Application.Products.UpdateProductStock;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.Service.Api.Controllers;
@@ -14,6 +15,7 @@ namespace Catalog.Service.Api.Controllers;
 public class ProductController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateProduct(CreateProductCommand command, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(command, cancellationToken);
@@ -36,6 +38,7 @@ public class ProductController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("{id:guid}/reserve-stock")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ReserveProductStock(Guid id, [FromBody] ReserveStockRequest request, CancellationToken cancellationToken)
     {
         var command = new ReserveProductStockCommand(id, request.Quantity);
@@ -44,6 +47,7 @@ public class ProductController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("{id:guid}/release-stock")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ReleaseProductStock(Guid id, [FromBody] ReleaseStockRequest request, CancellationToken cancellationToken)
     {
         var command = new ReleaseProductStockCommand(id, request.Quantity);
@@ -52,6 +56,7 @@ public class ProductController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteProductCommand(id);
