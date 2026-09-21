@@ -49,6 +49,19 @@ if (app.Environment.IsDevelopment())
             await roleManager.CreateAsync(new IdentityRole(role));
         }
     }
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    const string adminEmail = "admin@orderflow.com";
+
+    var adminPassword = builder.Configuration["Seed:AdminPassword"] 
+        ?? throw new InvalidOperationException("Admin seed password not configured.");
+
+    if (await userManager.FindByEmailAsync(adminEmail) is null)
+    {
+        var adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail };
+        await userManager.CreateAsync(adminUser, adminPassword);
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
 }
 
 app.UseHttpsRedirection();
