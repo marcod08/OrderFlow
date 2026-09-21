@@ -10,7 +10,7 @@ public class CreateOrderHandler(IOrderRepository repository, IPublishEndpoint pu
 {
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = new Order(request.ProductId, request.Quantity);
+        var order = new Order(request.ProductId, request.Quantity, request.UserId);
 
         await repository.AddAsync(order, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

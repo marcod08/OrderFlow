@@ -11,7 +11,7 @@ public class OrderRepositoryTests(PostgresTestFixture fixture) : IClassFixture<P
     {
         // Arrange
         var repository = new OrderRepository(fixture.DbContext);
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
 
         // Act
         await repository.AddAsync(order, CancellationToken.None);
@@ -30,7 +30,7 @@ public class OrderRepositoryTests(PostgresTestFixture fixture) : IClassFixture<P
     {
         // Arrange
         var repository = new OrderRepository(fixture.DbContext);
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
 
         await repository.AddAsync(order, CancellationToken.None);
         await repository.SaveChangesAsync(CancellationToken.None);

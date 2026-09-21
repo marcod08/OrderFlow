@@ -8,6 +8,12 @@ public class CancelOrderHandler(IOrderRepository repository) : IRequestHandler<C
     public async Task<bool> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
     {
         var order = await repository.GetByIdAsync(request.OrderId, cancellationToken) ?? throw new KeyNotFoundException($"Order with id {request.OrderId} not found.");
+        
+        if (order.UserId != request.UserId)
+        {
+            throw new KeyNotFoundException($"Order with id {request.OrderId} not found.");
+        }
+        
         order.MarkCancelled();
 
         await repository.SaveChangesAsync(cancellationToken);

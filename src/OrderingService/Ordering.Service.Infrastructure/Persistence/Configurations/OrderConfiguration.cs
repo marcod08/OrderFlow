@@ -28,5 +28,8 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         
         builder.Property(o => o.CreatedAt)
             .IsRequired();
+
+        builder.Property(o => o.UserId)
+            .IsRequired();
     }
 }

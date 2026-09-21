@@ -1,9 +1,12 @@
+using System.Security.Cryptography;
 using BuildingBlocks.Api.Middleware;
 using BuildingBlocks.Application.Behaviors;
 using FluentValidation;
 using MassTransit;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Ordering.Service.Application.Consumers;
 using Ordering.Service.Application.Interfaces;
 using Ordering.Service.Application.Orders.CreateOrder;
@@ -55,6 +58,26 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
+var rsa = RSA.Create();
+rsa.ImportFromPem(builder.Configuration["Jwt:PublicKey"]);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new RsaSecurityKey(rsa)
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -70,6 +93,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

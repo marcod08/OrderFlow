@@ -10,7 +10,7 @@ public class GetOrderByIdHandler (IOrderRepository repository) : IRequestHandler
     {
         var order = await repository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (order is null) return null;
+        if (order is null || order.UserId != request.UserId) return null;
         
         return new OrderResponse(order.Id, order.ProductId, order.Quantity, order.TotalPrice, order.Status, order.CreatedAt);
     }

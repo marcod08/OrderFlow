@@ -17,10 +17,11 @@ public class Order
     public decimal? TotalPrice { get; private set; }
     public OrderStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
+    public string UserId { get; private set; } = null!;
 
     private Order() { } //lo userò per EF Core
 
-    public Order(Guid productId, int quantity)
+    public Order(Guid productId, int quantity, string userId)
     {
         if (quantity <= 0)
         {
@@ -32,6 +33,7 @@ public class Order
         Quantity = quantity;
         Status = OrderStatus.Pending;
         CreatedAt = DateTime.UtcNow;
+        UserId = userId;
     }
 
     public void SetTotalPrice(decimal totalPrice)

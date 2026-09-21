@@ -13,7 +13,7 @@ public class OrderTests
         var quantity = 5;
 
         // Act
-        var order = new Order(productId, quantity);
+        var order = new Order(productId, quantity, "test-user-id");
 
         // Assert
         order.Id.Should().NotBe(Guid.Empty);
@@ -32,7 +32,7 @@ public class OrderTests
         var quantity = 0;
 
         //Act
-        Action act = () => new Order(productId, quantity);
+        Action act = () => new Order(productId, quantity, "test-user-id");
 
         // Assert
         act.Should().Throw<ArgumentOutOfRangeException>();
@@ -42,7 +42,7 @@ public class OrderTests
     public void MarkStockReserved_FromPendingStatus_ChangesStatusToStockReserved()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
 
         // Act
         order.MarkStockReserved();
@@ -55,7 +55,7 @@ public class OrderTests
     public void MarkStockReserved_FromNonPendingStatus_ThrowsInvalidOperationException()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         order.MarkStockReserved(); 
 
         // Act
@@ -69,7 +69,7 @@ public class OrderTests
     public void MarkPaymentProcessed_FromStockReservedStatus_ChangesStatusToPaymentProcessed()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         order.MarkStockReserved(); 
         
         //Act
@@ -83,7 +83,7 @@ public class OrderTests
     public void MarkPaymentProcessed_FromNonStockReservedStatus_ThrowsInvalidOperationException()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
 
         // Act
         Action act = () => order.MarkPaymentProcessed();
@@ -96,7 +96,7 @@ public class OrderTests
     public void MarkConfirmed_FromPaymentProcessedStatus_ChangesStatusToConfirmed()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         order.MarkStockReserved(); 
         order.MarkPaymentProcessed(); 
 
@@ -111,7 +111,7 @@ public class OrderTests
     public void MarkConfirmed_FromNonPaymentProcessedStatus_ThrowsInvalidOperationException()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
 
         // Act
         Action act = () => order.MarkConfirmed();
@@ -124,7 +124,7 @@ public class OrderTests
     public void MarkCancelled_FromNonTerminalStatus_ChangesStatusToCancelled()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         order.MarkStockReserved();
 
         // Act
@@ -138,7 +138,7 @@ public class OrderTests
     public void MarkCancelled_FromConfirmedStatus_ThrowsInvalidOperationException()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         order.MarkStockReserved();
         order.MarkPaymentProcessed();
         order.MarkConfirmed();
@@ -154,7 +154,7 @@ public class OrderTests
     public void SetTotalPrice_WithValidPrice_SetsTotalPriceSuccessfully()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         var totalPrice = 100.00m;
 
         // Act
@@ -168,7 +168,7 @@ public class OrderTests
     public void SetTotalPrice_WithNegativePrice_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
-        var order = new Order(Guid.NewGuid(), 5);
+        var order = new Order(Guid.NewGuid(), 5, "test-user-id");
         var totalPrice = -50.00m;
 
         // Act
