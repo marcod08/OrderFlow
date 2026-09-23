@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: src/CatalogService/Catalog.Service.Api/Dockerfile
-    ports:
-      - "6000:8080"
+    #ports:
+    #  - "6000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CatalogDb=Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=devpassword;
@@ -41,8 +41,8 @@ services:
     build:
       context: .
       dockerfile: src/OrderingService/Ordering.Service.Api/Dockerfile
-    ports:
-      - "6001:8080"
+    #ports:
+    #  - "6001:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__OrderingDb=Host=orderingdb;Port=5432;Database=orderingdb;Username=postgres;Password=devpassword;
@@ -77,8 +77,8 @@ services:
     build:
       context: .
       dockerfile: src/BillingService/Billing.Service.Api/Dockerfile
-    ports:
-      - "6002:8080"
+    #ports:
+    #  - "6002:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__BillingDb=Host=billingdb;Port=5432;Database=billingdb;Username=postgres;Password=devpassword;
@@ -110,8 +110,8 @@ services:
     build:
       context: .
       dockerfile: src/IdentityService/Identity.Service.Api/Dockerfile
-    ports:
-      - "6004:8080"
+    #ports:
+    #  - "6004:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__IdentityDb=Host=identitydb;Port=5432;Database=identitydb;Username=postgres;Password=devpassword;
@@ -165,6 +165,10 @@ services:
       catalogserviceapi:
         condition: service_started
       orderingserviceapi:
+        condition: service_started
+      billingserviceapi:
+        condition: service_started
+      identityserviceapi:
         condition: service_started
 
 volumes:
