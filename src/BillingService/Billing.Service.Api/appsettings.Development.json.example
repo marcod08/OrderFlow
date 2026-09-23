@@ -1,0 +1,16 @@
+{
+  "ConnectionStrings": {
+    "BillingDb": "Host=localhost;Port=5434;Database=billingdb;Username=postgres;Password=<POSTGRES_PASSWORD>"
+  },
+  "RabbitMq": {
+    "Host": "localhost",
+    "Username": "guest",
+    "Password": "guest"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}

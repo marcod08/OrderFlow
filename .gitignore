@@ -9,3 +9,4 @@ appsettings.Development.json
 *.pem
 .env
 .env*
+!.env.example

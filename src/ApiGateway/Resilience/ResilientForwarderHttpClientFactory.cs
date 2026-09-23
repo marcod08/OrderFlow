@@ -12,8 +12,9 @@ public class ResilientForwarderHttpClientFactory : ForwarderHttpClientFactory
     {
         var baseHandler = base.WrapHandler(context, handler);
 
+        // Strategies wrap each other in the order they are added (first = outermost).
+        // The timeout is innermost so that it applies to each single attempt, not to the whole retry sequence.
         var pipeline = new ResiliencePipelineBuilder<HttpResponseMessage>()
-            .AddTimeout(TimeSpan.FromSeconds(2))
             .AddRetry(new Polly.Retry.RetryStrategyOptions<HttpResponseMessage>
             {
                 ShouldHandle = new PredicateBuilder<HttpResponseMessage>()
@@ -32,11 +33,13 @@ public class ResilientForwarderHttpClientFactory : ForwarderHttpClientFactory
             {
                 ShouldHandle = new PredicateBuilder<HttpResponseMessage>()
                     .HandleResult(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
-                    .Handle<HttpRequestException>(),
+                    .Handle<HttpRequestException>()
+                    .Handle<TimeoutRejectedException>(),
                 FailureRatio = 0.5,
                 MinimumThroughput = 5,
                 BreakDuration = TimeSpan.FromSeconds(10)
             })
+            .AddTimeout(TimeSpan.FromSeconds(2))
             .Build();
 
         return new ResilienceHandler(pipeline) {InnerHandler = baseHandler};

@@ -1,0 +1,20 @@
+{
+  "ConnectionStrings": {
+    "IdentityDb": "Host=localhost;Port=5435;Database=identitydb;Username=postgres;Password=<POSTGRES_PASSWORD>"
+  },
+  "Jwt": {
+    "PrivateKey": "-----BEGIN PRIVATE KEY-----\n<BASE64_PRIVATE_KEY_CONTENT>\n-----END PRIVATE KEY-----",
+    "Issuer": "OrderFlow.Identity",
+    "Audience": "OrderFlow.Services",
+    "ExpiryMinutes": 60
+  },
+  "Seed": {
+    "AdminPassword": "<ADMIN_SEED_PASSWORD>"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}

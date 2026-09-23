@@ -1,0 +1,21 @@
+{
+  "ConnectionStrings": {
+    "OrderingDb": "Host=localhost;Port=5433;Database=orderingdb;Username=postgres;Password=<POSTGRES_PASSWORD>"
+  },
+  "RabbitMq": {
+    "Host": "localhost",
+    "Username": "guest",
+    "Password": "guest"
+  },
+  "Jwt": {
+    "PublicKey": "-----BEGIN PUBLIC KEY-----\n<BASE64_PUBLIC_KEY_CONTENT>\n-----END PUBLIC KEY-----",
+    "Issuer": "OrderFlow.Identity",
+    "Audience": "OrderFlow.Services"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}

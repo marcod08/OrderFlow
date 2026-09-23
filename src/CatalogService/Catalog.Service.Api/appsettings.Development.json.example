@@ -1,0 +1,21 @@
+{
+  "ConnectionStrings": {
+    "CatalogDb": "Host=localhost;Port=5432;Database=catalogdb;Username=postgres;Password=<POSTGRES_PASSWORD>"
+  },
+  "RabbitMq": {
+    "Host": "localhost",
+    "Username": "guest",
+    "Password": "guest"
+  },
+  "Jwt": {
+    "PublicKey": "-----BEGIN PUBLIC KEY-----\n<BASE64_PUBLIC_KEY_CONTENT>\n-----END PUBLIC KEY-----",
+    "Issuer": "OrderFlow.Identity",
+    "Audience": "OrderFlow.Services"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}
