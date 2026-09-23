@@ -7,3 +7,5 @@ obj/
 appsettings.Development.json
 .DS_Store
 *.pem
+.env
+.env*

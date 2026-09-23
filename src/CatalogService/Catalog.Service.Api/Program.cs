@@ -56,8 +56,10 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
+var publicKeyPem = builder.Configuration["Jwt:PublicKey"]!.Replace("\\n", "\n");
+
 var rsa = RSA.Create();
-rsa.ImportFromPem(builder.Configuration["Jwt:PublicKey"]);
+rsa.ImportFromPem(publicKeyPem);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

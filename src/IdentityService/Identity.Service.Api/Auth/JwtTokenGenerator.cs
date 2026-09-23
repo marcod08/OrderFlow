@@ -22,8 +22,10 @@ public class JwtTokenGenerator(IConfiguration configuration)
 
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
+        var privateKeyPem = configuration["Jwt:PrivateKey"]!.Replace("\\n", "\n");
+
         var rsa = RSA.Create();
-        rsa.ImportFromPem(configuration["Jwt:PrivateKey"]);
+        rsa.ImportFromPem(privateKeyPem);
 
         var key = new RsaSecurityKey(rsa);
         var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);

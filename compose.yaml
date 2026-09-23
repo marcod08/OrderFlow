@@ -11,6 +11,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CatalogDb=Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=devpassword;
       - RabbitMQ__Host=rabbitmq
+      - Jwt__PublicKey=${JWT_PUBLIC_KEY}
+      - Jwt__Issuer=OrderFlow.Identity
+      - Jwt__Audience=OrderFlow.Services
     depends_on:
       catalogdb:
         condition: service_healthy
@@ -44,6 +47,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__OrderingDb=Host=orderingdb;Port=5432;Database=orderingdb;Username=postgres;Password=devpassword;
       - RabbitMQ__Host=rabbitmq
+      - Jwt__PublicKey=${JWT_PUBLIC_KEY}
+      - Jwt__Issuer=OrderFlow.Identity
+      - Jwt__Audience=OrderFlow.Services
     depends_on:
       orderingdb:
         condition: service_healthy
@@ -98,6 +104,25 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  identityserviceapi:
+    image: identityserviceapi
+    build:
+      context: .
+      dockerfile: src/IdentityService/Identity.Service.Api/Dockerfile
+    ports:
+      - "6004:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__IdentityDb=Host=identitydb;Port=5432;Database=identitydb;Username=postgres;Password=devpassword;
+      - Jwt__PrivateKey=${JWT_PRIVATE_KEY}
+      - Jwt__Issuer=OrderFlow.Identity
+      - Jwt__Audience=OrderFlow.Services
+      - Jwt__ExpiryMinutes=60
+      - Seed__AdminPassword=${ADMIN_SEED_PASSWORD}
+    depends_on:
+      identitydb:
+        condition: service_healthy
 
   identitydb:
     image: postgres:16
